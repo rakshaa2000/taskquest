@@ -1,0 +1,250 @@
+.hero-status {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .hero-status {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.hero-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+  flex: 1;
+}
+
+@media (min-width: 768px) {
+  .hero-profile {
+    flex-direction: row;
+    text-align: left;
+    gap: 1.5rem;
+  }
+}
+
+.avatar-placeholder {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid var(--accent-purple);
+  padding: 4px;
+  overflow: hidden;
+  box-shadow: var(--shadow-glow);
+}
+
+.avatar-placeholder img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.hero-info {
+  flex: 1;
+}
+
+.hero-info h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hero-info h2 span {
+  font-size: 0.875rem;
+  color: var(--accent-purple);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: rgba(139, 92, 246, 0.1);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+}
+
+.hero-name {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.75rem;
+}
+
+.btn-icon {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 2px;
+}
+.btn-icon:hover {
+  color: var(--accent-purple);
+}
+
+.stats-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.stat {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.stat-icon {
+  flex-shrink: 0;
+}
+
+.hp-icon { color: var(--hp-color); }
+.xp-icon { color: var(--xp-color); }
+
+.stat .progress-bar-container {
+  flex: 1;
+  height: 8px;
+}
+
+.stat-text {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  min-width: 50px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.currencies {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .currencies {
+    justify-content: flex-end;
+  }
+}
+
+.currency-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md);
+  background: rgba(0, 0, 0, 0.2);
+  font-weight: 600;
+  font-size: 1.125rem;
+}
+
+.currency-badge.gold {
+  color: var(--gold-color);
+  border: 1px solid rgba(251, 191, 36, 0.3);
+}
+
+.currency-badge.shards {
+  color: var(--accent-neon);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.currency-badge.streak {
+  color: var(--hp-color);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.modal-content {
+  width: 90%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.form-group input, .form-group select {
+  padding: 0.75rem;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-family: inherit;
+}
+
+.form-group select option {
+  color: black;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.avatar-selection {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.avatar-option {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid transparent;
+  padding: 2px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.avatar-option:hover {
+  transform: scale(1.1);
+  border-color: rgba(139, 92, 246, 0.5);
+}
+
+.avatar-option.selected {
+  border-color: var(--accent-purple);
+  background: rgba(139, 92, 246, 0.2);
+  box-shadow: var(--shadow-glow);
+}
+
+.avatar-option img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}

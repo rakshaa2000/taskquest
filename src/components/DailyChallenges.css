@@ -1,0 +1,62 @@
+.daily-challenges {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.challenges-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.challenge-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: var(--transition);
+}
+
+.challenge-card:hover {
+  background: rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
+}
+
+.challenge-card.completed {
+  opacity: 0.6;
+}
+
+.challenge-info h4 {
+  margin-bottom: 0.25rem;
+  font-size: 1rem;
+}
+
+.challenge-rewards {
+  display: flex;
+  gap: 0.75rem;
+  font-size: 0.85rem;
+}
+
+.challenge-done {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: var(--accent-neon);
+  font-weight: bold;
+}
+
+@media (max-width: 600px) {
+  .challenge-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  .challenge-card button {
+    width: 100%;
+    justify-content: center;
+  }
+}

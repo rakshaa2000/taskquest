@@ -1,0 +1,83 @@
+.pomodoro-forge {
+  display: flex;
+  flex-direction: column;
+}
+
+.forge-icon {
+  color: var(--accent-neon);
+}
+
+.forge-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1rem 0;
+}
+
+.forge-mode {
+  display: flex;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: var(--radius-full);
+  padding: 0.25rem;
+}
+
+.forge-mode span {
+  padding: 0.5rem 1.5rem;
+  border-radius: var(--radius-full);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: var(--transition);
+}
+
+.forge-mode span.active.focus {
+  background: var(--accent-neon);
+  color: #000;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+}
+
+.forge-mode span.active.break {
+  background: var(--xp-color);
+  color: #fff;
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+}
+
+.timer-display {
+  font-family: 'Outfit', sans-serif;
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  background: rgba(0, 0, 0, 0.2);
+  width: 160px;
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 3px solid var(--panel-border);
+  position: relative;
+}
+
+.timer-display.glow-effect {
+  border-color: var(--accent-neon);
+  animation: pulse-glow 2s infinite;
+}
+
+.forge-warning {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  text-align: center;
+  max-width: 80%;
+}
+
+.forge-controls {
+  display: flex;
+  gap: 1rem;
+}
+
+.forge-controls .btn {
+  min-width: 100px;
+  justify-content: center;
+}

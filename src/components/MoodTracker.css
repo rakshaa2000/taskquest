@@ -1,0 +1,64 @@
+.mood-tracker.compact {
+  padding: 0.75rem 1rem;
+}
+
+.compact-title {
+  font-size: 1rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.mood-tracker-compact-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.tracker-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.btn-group {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.btn-group .btn {
+  justify-content: center;
+}
+
+.btn-sm {
+  padding: 0.4rem 0.6rem !important;
+  min-width: auto !important;
+  font-size: 0.85rem;
+}
+
+.btn.active-mood {
+  background: var(--accent-purple);
+  color: white;
+  border-color: var(--accent-purple);
+  box-shadow: var(--shadow-glow);
+}
+
+.sync-btn {
+  margin-top: 0 !important;
+  flex: 0 0 auto !important;
+  padding: 0.4rem 1.2rem !important;
+}
+
+.compact-insight {
+  padding: 0.5rem 0.75rem !important;
+  margin-top: 0.5rem;
+  background: rgba(139, 92, 246, 0.08);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: var(--radius-md);
+}
+
+.compact-insight p {
+  font-size: 0.78rem;
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
