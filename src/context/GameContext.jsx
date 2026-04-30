@@ -43,15 +43,14 @@ export const GameProvider = ({ children }) => {
   });
 
   const [profile, setProfile] = usePersistedState('tq_profile', {
-    name: 'Hero',
+    name: 'You',
     archetype: 'Coder',
-    avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=TaskQuestHero&backgroundColor=transparent'
+    avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=TaskQuestYou&backgroundColor=transparent'
   });
 
   const [moodTracker, setMoodTracker] = usePersistedState('tq_moodTracker', {
-    mood: 'focused',
-    energyLevel: 'high',
-    insight: 'Your energy peaks in the morning. Schedule Hard quests now!'
+    energyLevel: 'balanced',
+    insight: 'You are in a stable state. A good time for steady progress.'
   });
 
   const [quests, setQuests] = usePersistedState('tq_quests', [
@@ -80,16 +79,20 @@ export const GameProvider = ({ children }) => {
     { id: 'rich', title: 'Treasure Hoarder', description: "Hoard 1000 Gold", unlocked: false, icon: '💰', color: 'var(--gold-color)' },
   ]);
 
-  const [boss, setBoss] = usePersistedState('tq_boss', {
-    name: 'The Architectural Refactor',
-    maxHp: 500,
-    currentHp: 500,
-    tasks: [
-      { id: 101, title: 'Define new data models', damage: 150, completed: false },
-      { id: 102, title: 'Migrate legacy user data', damage: 200, completed: false },
-      { id: 103, title: 'Update API endpoints', damage: 150, completed: false },
-    ]
-  });
+  const [bosses, setBosses] = usePersistedState('tq_bosses', [
+    {
+      id: Date.now(),
+      name: 'The Architectural Refactor',
+      maxHp: 500,
+      currentHp: 500,
+      defeated: false,
+      tasks: [
+        { id: 101, title: 'Define new data models', damage: 150, completed: false },
+        { id: 102, title: 'Migrate legacy user data', damage: 200, completed: false },
+        { id: 103, title: 'Update API endpoints', damage: 150, completed: false },
+      ]
+    }
+  ]);
 
   const [inventory, setInventory] = usePersistedState('tq_inventory', []);
 
@@ -130,16 +133,20 @@ export const GameProvider = ({ children }) => {
     if (unlockedAny) {
       setAchievements(newAchievements);
     }
-  }, [stats, level, inventory, gold]); // Omitting achievements safely
+  }, [stats, level, inventory, gold]); 
 
   const updateProfile = (updates) => setProfile(prev => ({ ...prev, ...updates }));
 
-  const logMood = (mood, energyLevel) => {
+  const logMood = (energyLevel) => {
     let insight = "Keep going!";
-    if (energyLevel === 'high') insight = "You have high energy! Tackle a Hard quest now.";
-    else if (energyLevel === 'low') insight = "Energy is low. Try an Easy quest or take a Break.";
-    
-    setMoodTracker({ mood, energyLevel, insight });
+    switch(energyLevel) {
+      case 'hyper': insight = "Hyper-focus engaged! Slay those Hard bosses now."; break;
+      case 'high': insight = "Energy is high! Perfect time for challenging quests."; break;
+      case 'balanced': insight = "Balanced state. Great for consistent, quality work."; break;
+      case 'low': insight = "Energy is dipping. Focus on Easy tasks or quick wins."; break;
+      case 'burned': insight = "Burnout alert! Stop everything and take a real break."; break;
+    }
+    setMoodTracker({ energyLevel, insight });
   };
 
   const addQuest = (title, difficulty, estimatedTime) => {
@@ -162,17 +169,20 @@ export const GameProvider = ({ children }) => {
   };
 
   const addBoss = (name, maxHp, tasks) => {
-    setBoss({
+    const newBoss = {
+      id: Date.now(),
       name,
       maxHp,
       currentHp: maxHp,
+      defeated: false,
       tasks: tasks.map((t, idx) => ({ 
-        id: Date.now() + idx, 
+        id: Date.now() + idx + 1, 
         title: t.title, 
         damage: t.damage, 
         completed: false 
       }))
-    });
+    };
+    setBosses(prev => [...prev, newBoss]);
   };
 
   const completeQuest = (id) => {
@@ -203,19 +213,23 @@ export const GameProvider = ({ children }) => {
     setTimeout(() => setToastMsg(null), 4000);
   };
 
-  const completeBossTask = (id) => {
-    setBoss(prev => {
-      const updatedTasks = prev.tasks.map(t => {
-        if (t.id === id && !t.completed) {
+  const completeBossTask = (bossId, taskId) => {
+    setBosses(prev => prev.map(b => {
+      if (b.id !== bossId || b.defeated) return b;
+
+      const updatedTasks = b.tasks.map(t => {
+        if (t.id === taskId && !t.completed) {
           return { ...t, completed: true };
         }
         return t;
       });
       
-      const task = prev.tasks.find(t => t.id === id);
+      const task = b.tasks.find(t => t.id === taskId);
       if (task && !task.completed) {
-        const newHp = Math.max(0, prev.currentHp - task.damage);
-        if (newHp === 0) {
+        const newHp = Math.max(0, b.currentHp - task.damage);
+        const isDefeated = newHp === 0;
+
+        if (isDefeated) {
           gainRewards(500, 200); // Boss defeat base bonus
           
           // Generate extra loot
@@ -245,10 +259,10 @@ export const GameProvider = ({ children }) => {
 
           setStats(s => ({ ...s, bossesDefeated: s.bossesDefeated + 1 }));
         }
-        return { ...prev, tasks: updatedTasks, currentHp: newHp };
+        return { ...b, tasks: updatedTasks, currentHp: newHp, defeated: isDefeated };
       }
-      return prev;
-    });
+      return b;
+    }));
   };
 
   const editQuest = (id, updates) => {
@@ -365,7 +379,7 @@ export const GameProvider = ({ children }) => {
   return (
     <GameContext.Provider value={{
       level, xp, maxXp, hp, maxHp, gold, focusShards, streak,
-      quests, boss, profile, moodTracker, dailyChallenges, achievements, stats, inventory, toastMsg, checkInData,
+      quests, bosses, profile, moodTracker, dailyChallenges, achievements, stats, inventory, toastMsg, checkInData,
       completeQuest, completeBossTask, takeDamage, addFocusShard,
       addQuest, editQuest, addBoss, updateProfile, logMood, completeDailyChallenge, buyItem, performCheckIn
     }}>
@@ -373,3 +387,5 @@ export const GameProvider = ({ children }) => {
     </GameContext.Provider>
   );
 };
+
+

@@ -5,11 +5,9 @@ import './MoodTracker.css';
 
 export default function MoodTracker() {
   const { moodTracker, logMood } = useGame();
-  const [selectedMood, setSelectedMood] = useState(moodTracker.mood);
-  const [selectedEnergy, setSelectedEnergy] = useState(moodTracker.energyLevel);
 
-  const handleLog = () => {
-    logMood(selectedMood, selectedEnergy);
+  const handleSelect = (energy) => {
+    logMood(energy);
   };
 
   return (
@@ -22,42 +20,42 @@ export default function MoodTracker() {
         <div className="tracker-group">
           <div className="btn-group">
             <button 
-              className={`btn btn-sm ${selectedMood === 'focused' ? 'active-mood' : ''}`} 
-              onClick={() => setSelectedMood('focused')}
-              title="Focused"
+              className={`btn btn-sm ${moodTracker.energyLevel === 'hyper' ? 'active-mood' : ''}`} 
+              onClick={() => handleSelect('hyper')}
+              title="Hyper-focused"
             >
-              <Smile size={16}/>
+              <Zap size={16} color="#fbbf24" /> Hyper
             </button>
             <button 
-              className={`btn btn-sm ${selectedMood === 'stressed' ? 'active-mood' : ''}`} 
-              onClick={() => setSelectedMood('stressed')}
-              title="Stressed"
-            >
-              <Frown size={16}/>
-            </button>
-          </div>
-        </div>
-
-        <div className="tracker-group">
-          <div className="btn-group">
-            <button 
-              className={`btn btn-sm ${selectedEnergy === 'high' ? 'active-mood' : ''}`} 
-              onClick={() => setSelectedEnergy('high')}
+              className={`btn btn-sm ${moodTracker.energyLevel === 'high' ? 'active-mood' : ''}`} 
+              onClick={() => handleSelect('high')}
               title="High Energy"
             >
-              <Zap size={16}/>
+              <Zap size={16}/> High
             </button>
             <button 
-              className={`btn btn-sm ${selectedEnergy === 'low' ? 'active-mood' : ''}`} 
-              onClick={() => setSelectedEnergy('low')}
+              className={`btn btn-sm ${moodTracker.energyLevel === 'balanced' ? 'active-mood' : ''}`} 
+              onClick={() => handleSelect('balanced')}
+              title="Balanced"
+            >
+              <Activity size={16}/> Mid
+            </button>
+            <button 
+              className={`btn btn-sm ${moodTracker.energyLevel === 'low' ? 'active-mood' : ''}`} 
+              onClick={() => handleSelect('low')}
               title="Low Energy"
             >
-              <Battery size={16}/>
+              <Battery size={16}/> Low
+            </button>
+            <button 
+              className={`btn btn-sm ${moodTracker.energyLevel === 'burned' ? 'active-mood' : ''}`} 
+              onClick={() => handleSelect('burned')}
+              title="Burned Out"
+            >
+              <Battery size={16} color="#ef4444" /> Exhausted
             </button>
           </div>
         </div>
-
-        <button className="btn btn-primary btn-sm sync-btn" onClick={handleLog}>Sync</button>
       </div>
 
       {moodTracker.insight && (

@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useGame } from '../context/GameContext';
-import { Scroll, CheckCircle, Calendar, Layout, Coins, Zap, Plus, Edit2, Save, X } from 'lucide-react';
+import { Scroll, CheckCircle, Calendar, Layout, Coins, Zap, Plus, Edit2, Save, X, Shield, Sword, Hammer, Wand2 } from 'lucide-react';
 import './QuestBoard.css';
+
+const TASK_ICONS = [<Scroll size={14} />, <Shield size={14} />, <Sword size={14} />, <Hammer size={14} />, <Wand2 size={14} />];
 
 export default function QuestBoard() {
   const { quests, completeQuest, addQuest, editQuest } = useGame();
@@ -41,12 +43,10 @@ export default function QuestBoard() {
     setIsAdding(false);
   };
 
-  const getSourceIcon = (source) => {
-    switch (source) {
-      case 'jira': return <Layout size={14} />;
-      case 'calendar': return <Calendar size={14} />;
-      default: return null;
-    }
+  const getSourceIcon = (quest) => {
+    if (quest.source === 'jira') return <Layout size={14} />;
+    if (quest.source === 'calendar') return <Calendar size={14} />;
+    return TASK_ICONS[quest.id % TASK_ICONS.length];
   };
 
   const getDifficultyColor = (diff) => {
@@ -144,12 +144,12 @@ export default function QuestBoard() {
               ) : (
                 <>
                   <div className="quest-header">
-                    <div className="quest-title-container">
+                    <div className="quest-title-container" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                       <span className="quest-source" title={quest.source || 'Manual'}>
-                        {getSourceIcon(quest.source)}
+                        {getSourceIcon(quest)}
                       </span>
                       <h4>{quest.title}</h4>
-                      <button className="btn-icon" onClick={() => handleStartEdit(quest)} style={{ marginLeft: '0.5rem' }} title="Edit Quest">
+                      <button className="btn-icon" onClick={() => handleStartEdit(quest)} style={{ marginLeft: '0.25rem' }} title="Edit Quest">
                         <Edit2 size={14} />
                       </button>
                     </div>

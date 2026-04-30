@@ -421,7 +421,7 @@ h1, h2, h3, h4, h5, h6 {
     display: none !important;
   }
 
-  .active-tab-hero .section-hero { display: flex !important; flex-direction: column; }
+  .active-tab-you .section-you { display: flex !important; flex-direction: column; }
   .active-tab-quests .section-quests { display: flex !important; flex-direction: column; }
   .active-tab-bosses .section-bosses { display: flex !important; flex-direction: column; }
   .active-tab-store .section-store { display: flex !important; flex-direction: column; }

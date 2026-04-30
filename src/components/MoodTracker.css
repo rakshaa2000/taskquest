@@ -22,7 +22,8 @@
 
 .btn-group {
   display: flex;
-  gap: 0.35rem;
+  gap: 0.25rem;
+  flex-wrap: wrap;
 }
 
 .btn-group .btn {

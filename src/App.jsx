@@ -9,17 +9,35 @@ import DailyChallenges from './components/DailyChallenges';
 import MoodTracker from './components/MoodTracker';
 import EquipmentStore from './components/EquipmentStore';
 import CheckInCalendar from './components/CheckInCalendar';
+import { Download } from 'lucide-react';
 
 function GameDashboard() {
   const { achievements, stats, level, inventory, gold, toastMsg } = useGame();
-  const [activeTab, setActiveTab] = useState('hero');
+  const [activeTab, setActiveTab] = useState('bosses');
+  const [installPrompt, setInstallPrompt] = useState(null);
+
+  useEffect(() => {
+    const handler = (e) => {
+      e.preventDefault();
+      setInstallPrompt(e);
+    };
+    window.addEventListener('beforeinstallprompt', handler);
+    return () => window.removeEventListener('beforeinstallprompt', handler);
+  }, []);
+
+  const handleInstall = async () => {
+    if (!installPrompt) return;
+    installPrompt.prompt();
+    const { outcome } = await installPrompt.userChoice;
+    if (outcome === 'accepted') setInstallPrompt(null);
+  };
 
   return (
     <div className={`app-container active-tab-${activeTab}`}>
       {/* Mobile Nav */}
       <nav className="mobile-nav">
-        <button className={activeTab === 'hero' ? 'active' : ''} onClick={() => setActiveTab('hero')}>
-          <User size={20} /><span>Hero</span>
+        <button className={activeTab === 'you' ? 'active' : ''} onClick={() => setActiveTab('you')}>
+          <User size={20} /><span>You</span>
         </button>
         <button className={activeTab === 'quests' ? 'active' : ''} onClick={() => setActiveTab('quests')}>
           <List size={20} /><span>Quests</span>
@@ -35,32 +53,41 @@ function GameDashboard() {
         </button>
       </nav>
 
-      {/* Full-width Hero Banner */}
-      <div className="tab-section section-hero full-width-section">
+      {/* Full-width You Banner */}
+      <div className="tab-section section-you full-width-section">
+        {installPrompt && (
+          <div className="glass-panel" style={{ marginBottom: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', border: '1px solid var(--accent-purple)', background: 'rgba(139, 92, 246, 0.1)' }}>
+            <div>
+              <h4 style={{ margin: 0, fontSize: '0.9rem' }}>Install TaskQuest</h4>
+              <p style={{ margin: 0, fontSize: '0.8rem', opacity: 0.8 }}>Add to your home screen for quick access!</p>
+            </div>
+            <button className="btn btn-primary" onClick={handleInstall} style={{ gap: '0.5rem' }}>
+              <Download size={18} /> Install
+            </button>
+          </div>
+        )}
         <HeroStatus />
       </div>
 
       {/* Two-Column Layout */}
       <div className="dashboard-grid">
-        {/* Left Column */}
+        {/* Left Column: Tasks / Bosses / Actionables */}
         <div className="col-left">
-          <div className="tab-section section-hero">
-            <CheckInCalendar />
-          </div>
-
           <div className="tab-section section-quests" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
             <DailyChallenges />
             <QuestBoard />
           </div>
 
-          <div className="tab-section section-store">
-            <EquipmentStore />
+          <div className="tab-section section-bosses">
+            <BossBattle />
           </div>
         </div>
 
-        {/* Right Column */}
+        {/* Right Column: Achievements / Upgrades / Sync */}
         <div className="col-right">
-          <div className="tab-section section-hero">
+          <div className="tab-section section-you" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+            <MoodTracker />
+            
             <div className="glass-panel achievements-panel">
               <h3 className="section-title" style={{ fontSize: '1.1rem' }}>🏆 Achievements</h3>
               <div className="achievements-grid">
@@ -106,15 +133,13 @@ function GameDashboard() {
                 })}
               </div>
             </div>
-          </div>
 
-          <div className="tab-section section-bosses">
-            <BossBattle />
-          </div>
-
-          <div className="tab-section section-forge" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+            <div className="tab-section section-store">
+              <EquipmentStore />
+            </div>
+            
             <PomodoroForge />
-            <MoodTracker />
+            <CheckInCalendar />
           </div>
         </div>
       </div>

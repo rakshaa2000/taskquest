@@ -6,7 +6,7 @@ import { STORE_ITEMS } from './EquipmentStore';
 import './HeroStatus.css';
 
 const AVATARS = [
-  'https://api.dicebear.com/7.x/bottts/svg?seed=TaskQuestHero&backgroundColor=transparent',
+  'https://api.dicebear.com/7.x/bottts/svg?seed=TaskQuestYou&backgroundColor=transparent',
   'https://api.dicebear.com/7.x/avataaars/svg?seed=Felix&backgroundColor=transparent',
   'https://api.dicebear.com/7.x/micah/svg?seed=Max&backgroundColor=transparent',
   'https://api.dicebear.com/7.x/adventurer/svg?seed=Destiny&backgroundColor=transparent',
@@ -34,7 +34,7 @@ export default function HeroStatus() {
     <div className="glass-panel hero-status">
       <div className="hero-profile">
         <div className="avatar-placeholder">
-          <img src={profile.avatar} alt="Hero Avatar" />
+          <img src={profile.avatar} alt="Your Avatar" />
         </div>
         <div className="hero-info">
           <h2>
