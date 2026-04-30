@@ -81,6 +81,10 @@ function GameDashboard() {
           <div className="tab-section section-bosses">
             <BossBattle />
           </div>
+
+          <div className="tab-section section-forge">
+            <PomodoroForge />
+          </div>
         </div>
 
         {/* Right Column: Achievements / Upgrades / Sync */}
@@ -138,7 +142,6 @@ function GameDashboard() {
               <EquipmentStore />
             </div>
             
-            <PomodoroForge />
             <CheckInCalendar />
           </div>
         </div>
