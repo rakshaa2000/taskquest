@@ -101,5 +101,33 @@
 @media (max-width: 768px) {
   .store-grid {
     max-height: none;
+    gap: 1rem;
+  }
+
+  .store-item {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.25rem;
+  }
+
+  .item-icon {
+    width: 60px;
+    height: 60px;
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .item-details {
+    width: 100%;
+  }
+
+  .item-details h4 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .item-details p {
+    font-size: 0.9rem;
+    margin-bottom: 1.25rem !important;
   }
 }

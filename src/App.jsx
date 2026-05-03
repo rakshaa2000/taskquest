@@ -53,8 +53,8 @@ function GameDashboard() {
         </button>
       </nav>
 
-      {/* Full-width You Banner */}
-      <div className="tab-section section-you full-width-section">
+      {/* Full-width Banner - Always visible to show stats/gold */}
+      <div className="full-width-section">
         {installPrompt && (
           <div className="glass-panel" style={{ marginBottom: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', border: '1px solid var(--accent-purple)', background: 'rgba(139, 92, 246, 0.1)' }}>
             <div>
@@ -137,12 +137,12 @@ function GameDashboard() {
                 })}
               </div>
             </div>
-
-            <div className="tab-section section-store">
-              <EquipmentStore />
-            </div>
             
             <CheckInCalendar />
+          </div>
+
+          <div className="tab-section section-store">
+            <EquipmentStore />
           </div>
         </div>
       </div>
